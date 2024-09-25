@@ -13,10 +13,10 @@ def get_db():
     finally:
         db.close()
 
-@router.post('create')
+@router.post('/create')
 async def create_crop_data(crop_data: RequestCropData, db: Session = Depends(get_db)):
-    methods.create_crop_data(db,request.parameter)
-    return Response(code = 200, status='Ok', message="Crop_data created successfully").dict(exclude_none=True)
+    created_data = methods.create_crop_data(db, crop_data.parameter)
+    return Response(code='200', status='Ok', message="Crop_data created successfully", result=created_data).dict(exclude_none=True)
 
 @router.get("/")
 async def get_data(db: Session = Depends(get_db)):

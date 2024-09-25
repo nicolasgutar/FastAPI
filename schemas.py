@@ -1,6 +1,5 @@
-from typing import List, Optional, Generic, TypeVar
+from typing import List, Optional, Generic, TypeVar, Any
 from pydantic import BaseModel, Field
-from pydantic.generics import GenericModel
 
 T = TypeVar("T")
 
@@ -22,11 +21,11 @@ class RequestCropData(BaseModel):
     parameter: CropDataSchema = Field(...)
 
 # Response schema for returning records
-class Response(GenericModel, Generic[T]):
+class Response(BaseModel):
     code: str
     status: str
     message: str
-    result: Optional[T]
+    result: Optional[Any] = None
 
     class Config:
         orm_mode = True
