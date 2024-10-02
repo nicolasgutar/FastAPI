@@ -4,7 +4,7 @@ from schemas import CropDataSchema
 
 
 #get all data
-def get_data(db: Session, skip:int=0, limit:int=100):
+def get_data(db: Session, skip: int = 0, limit: int = 100):
     return db.query(CropData).offset(skip).limit(limit).all()
 
 #create an entry

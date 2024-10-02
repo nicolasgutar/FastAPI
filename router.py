@@ -1,10 +1,12 @@
-from fastapi import APIRouter, HTTPException, Depends, Path
+from fastapi import APIRouter, Depends, Path, Query
 from config import SessionLocal
 from sqlalchemy.orm import Session
-from schemas import CropDataSchema,RequestCropData, Response
+from schemas import RequestCropData, Response
 import methods
 
 router = APIRouter()
+
+
 
 def get_db():
     db = SessionLocal()
@@ -19,6 +21,6 @@ async def create_crop_data(crop_data: RequestCropData, db: Session = Depends(get
     return Response(code='200', status='Ok', message="Crop_data created successfully", result=created_data).dict(exclude_none=True)
 
 @router.get("/")
-async def get_data(db: Session = Depends(get_db)):
-    _data = methods.get_data(db,100,100)
-    return Response(code = '200', status='Ok', message="Crop_data fetched successfully", result=_data).dict(exclude_none=True)
+async def get_data(skip: int = Query(0), limit: int = Query(100), db: Session = Depends(get_db)):
+    _data = methods.get_data(db, skip, limit)
+    return Response(code='200', status='Ok', message="Crop_data fetched successfully", result=_data).dict(exclude_none=True)
