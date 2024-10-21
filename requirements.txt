@@ -4,3 +4,5 @@ sqlalchemy
 uvicorn
 psycopg2-binary
 pyngrok
+boto3
+botocore
