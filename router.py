@@ -21,7 +21,8 @@ async def create_crop_data_db(crop_data: RequestCropData, db: Session = Depends(
 @router.post('/s3')
 async def create_crop_data_s3(crop_data: RequestCropData):
     data = crop_data.dict()
-    result = methods.save_to_s3(data, bucket_name='user-08-smm-ueia-so', object_name='crop_data.json')
+    file_name = crop_data.file_name if crop_data.file_name else 'crop_data.json'
+    result = methods.save_to_s3(data, bucket_name='user-08-smm-ueia-so', object_name=file_name)
     if result['status'] == 'success':
         return Response(code='200', status='Ok', message=result['message'], result=data).dict(exclude_none=True)
     else:

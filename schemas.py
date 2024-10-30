@@ -19,6 +19,7 @@ class CropDataSchema(BaseModel):
 # Request schema for creating new records
 class RequestCropData(BaseModel):
     parameter: CropDataSchema = Field(...)
+    file_name: Optional[str] = None
 
 # Response schema for returning records
 class Response(BaseModel):
